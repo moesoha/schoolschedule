@@ -1,6 +1,7 @@
 package dev.soha.course202001.schoolschedule.model
 
 import androidx.room.*
+import kotlinx.serialization.Serializable
 import java.time.DayOfWeek
 
 /** 一节课的信息 */

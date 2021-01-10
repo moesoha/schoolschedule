@@ -1,10 +1,14 @@
 package dev.soha.course202001.schoolschedule.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import dev.soha.course202001.schoolschedule.model.Lesson
 
 @Dao interface LessonDao {
-	@Insert suspend fun insert(note: Lesson): Long
-	@Update suspend fun update(note: Lesson)
-	@Delete suspend fun delete(note: Lesson)
+	@Query("SELECT * FROM lesson")
+	fun getAllLessons(): LiveData<List<Lesson>>
+
+	@Insert suspend fun insert(entity: Lesson): Long
+	@Update suspend fun update(entity: Lesson)
+	@Delete suspend fun delete(entity: Lesson)
 }
