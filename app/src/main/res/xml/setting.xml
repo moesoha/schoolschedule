@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory
+		app:key="@string/key_setting_category_display"
+		app:title="@string/title_display_setting"
+		>
+
+		<EditTextPreference
+			app:key="@string/key_setting_current_week"
+			app:title="@string/setting_current_week"
+			android:inputType="number"
+			/>
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		app:key="@string/key_setting_category_data_sync"
+		app:title="@string/title_data_sync"
+		>
+
+		<Preference
+			app:key="@string/key_setting_oa_sync"
+			app:title="@string/title_oa_sync"
+			/>
+	</PreferenceCategory>
+</PreferenceScreen>

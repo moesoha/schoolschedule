@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/mobile_navigation"
+	app:startDestination="@+id/navigation_today"
+	>
+
+	<fragment
+		android:id="@+id/navigation_today"
+		android:name="dev.soha.course202001.schoolschedule.ui.today.TodayFragment"
+		android:label="@string/title_today"
+		tools:layout="@layout/fragment_today"
+		/>
+
+	<fragment
+		android:id="@+id/navigation_schedule"
+		android:name="dev.soha.course202001.schoolschedule.ui.schedule.ScheduleFragment"
+		android:label="@string/title_schedule"
+		tools:layout="@layout/fragment_schedule"
+		/>
+
+	<fragment
+		android:id="@+id/navigation_setting"
+		android:name="dev.soha.course202001.schoolschedule.ui.setting.SettingFragment"
+		android:label="@string/title_setting"
+		tools:layout="@layout/fragment_setting"
+		/>
+</navigation>

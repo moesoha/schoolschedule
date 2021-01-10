@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/navigation_today"
+		android:icon="@drawable/ic_baseline_view_day_24"
+		android:title="@string/title_today"
+		/>
+
+	<item
+		android:id="@+id/navigation_schedule"
+		android:icon="@drawable/ic_baseline_table_chart_24"
+		android:title="@string/title_schedule"
+		/>
+
+	<item
+		android:id="@+id/navigation_setting"
+		android:icon="@drawable/ic_baseline_settings_24"
+		android:title="@string/title_setting"
+		/>
+
+</menu>
