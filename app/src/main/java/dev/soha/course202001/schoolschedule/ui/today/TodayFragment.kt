@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +12,6 @@ import dev.soha.course202001.schoolschedule.R
 import dev.soha.course202001.schoolschedule.adapter.LessonCardListAdapter
 
 class TodayFragment: Fragment() {
-
 	private lateinit var todayViewModel: TodayViewModel
 
 	override fun onCreateView(
