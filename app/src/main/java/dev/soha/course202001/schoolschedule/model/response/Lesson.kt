@@ -25,7 +25,13 @@ data class Lesson(
 		place = place,
 		day = getDayOfWeek(),
 		session = StartEnd(session[0], session[1]),
-		week = StartEnd(week.start, week.end),
-		weekRepetition = week.type
+		week = StartEnd(when (week.type) {
+			1, 2 -> if ((week.start % 2) != (week.type % 2)) week.start + 1 else week.start
+			else -> week.start
+		}, week.end),
+		weekRepetition = when (week.type) {
+			0 -> 1
+			else -> 2
+		}
 	)
 }

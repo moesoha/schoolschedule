@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
+import java.time.DayOfWeek
 import kotlin.coroutines.suspendCoroutine
 
 class LessonRepository(context: Context) {
@@ -28,12 +29,15 @@ class LessonRepository(context: Context) {
 	val volley: VolleyRequestQueue = VolleyRequestQueue.getInstance(context)
 
 	fun getAllLessons() = lessonDao.getAllLessons()
+	fun getLessonsByDay(dow: DayOfWeek) = lessonDao.getLessonsByDay(dow)
+
+	fun find(id: Long) = lessonDao.find(id)
 
 	suspend fun syncWithOa(token: String) {
 		val lessons = suspendCoroutine<List<Lesson>> { continuation ->
 			Log.d(TAG, "syncWithOa started")
 			volley.add(JsonObjectRequest(
-				Request.Method.GET,
+				Request.Method.POST,
 				Application.OA_URL_SCHEDULE_CURRENT.format(token),
 				null,
 				{ response ->

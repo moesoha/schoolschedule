@@ -104,6 +104,7 @@ class OaLoginRepository(context: Context) {
 			))
 		}
 		if (loginSuccess) {
+			Log.d(LessonRepository.TAG, "loginSubmit success[$token]: $username")
 			saveToken(token, Date(Date().time + 39 * 60 * 1000), username)
 			saveCredential(username, password)
 		}

@@ -3,10 +3,17 @@ package dev.soha.course202001.schoolschedule.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import dev.soha.course202001.schoolschedule.model.Lesson
+import java.time.DayOfWeek
 
 @Dao interface LessonDao {
 	@Query("SELECT * FROM lesson")
 	fun getAllLessons(): LiveData<List<Lesson>>
+
+	@Query("SELECT * FROM lesson WHERE day = :dayOfWeek")
+	fun getLessonsByDay(dayOfWeek: DayOfWeek): LiveData<List<Lesson>>
+
+	@Query("SELECT * FROM lesson WHERE _id = :id")
+	fun find(id: Long): LiveData<Lesson>
 
 	@Query("DELETE FROM lesson WHERE 1=1")
 	suspend fun removeAllImportedLessons()

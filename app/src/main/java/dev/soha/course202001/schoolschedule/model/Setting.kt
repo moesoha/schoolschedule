@@ -24,7 +24,10 @@ data class Setting(
 		const val OA_TOKEN = "oa_token"
 		/** 目前可用的 token 已经登入的用户名 */
 		const val OA_TOKEN_ASSOCIATED_USERNAME = "oa_token_associated_username"
-		/** 目前可用的 token 的有效期 */
+		/** 目前可用的 token 的有效期，时间戳 */
 		const val OA_TOKEN_VALID_BEFORE = "oa_token_valid_before"
+
+		/** 第一周的周日的时间戳，用来计算当前周 */
+		const val DISPLAY_FIRST_WEEK_SUNDAY = "display_first_sunday"
 	}
 }

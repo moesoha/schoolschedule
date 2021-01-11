@@ -15,6 +15,8 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.SchoolSchedule"
 		>
+		<activity android:name=".ui.lesson.LessonShowActivity">
+		</activity>
 		<activity
 			android:name=".ui.oalogin.OaLoginActivity"
 			android:label="@string/title_activity_oa_login"

@@ -1,6 +1,9 @@
 package dev.soha.course202001.schoolschedule.model
 
+import android.content.res.Resources
 import androidx.room.*
+import dev.soha.course202001.schoolschedule.Application
+import dev.soha.course202001.schoolschedule.R
 import java.time.DayOfWeek
 
 /** 一节课的信息 */
@@ -37,4 +40,27 @@ data class Lesson(
 	/** 周循环 */
 	@ColumnInfo(name="week_repetition")
 	var weekRepetition: Int,
-)
+) {
+	private fun getString(resId: Int, vararg args: Any) = Application.res.getString(resId, *args)
+	private fun getStringArray(resId: Int) = Application.res.getStringArray(resId)
+
+	val sessionString: String
+		get() = getString(R.string.lesson_session_formatted, session.start, session.end)
+	val weekString: String
+		get() = getString(R.string.lesson_week_formatted, week.start, week.end)
+	val weekDayString: String
+		get() = when (weekRepetition) {
+			0 -> "???"
+			1 -> getString(R.string.lesson_time_week_formatted_1, getStringArray(R.array.dow)[day.value])
+			2 -> getString(
+				R.string.lesson_time_week_formatted,
+				getStringArray(R.array.week_repetition_2)[week.start % 2],
+				getStringArray(R.array.dow)[day.value]
+			)
+			else -> getString(
+				R.string.lesson_time_week_formatted,
+				getString(R.string.week_repetition_more, weekRepetition),
+				getStringArray(R.array.dow)[day.value]
+			)
+		}
+}
