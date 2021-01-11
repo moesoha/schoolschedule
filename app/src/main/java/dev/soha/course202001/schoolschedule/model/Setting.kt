@@ -28,6 +28,6 @@ data class Setting(
 		const val OA_TOKEN_VALID_BEFORE = "oa_token_valid_before"
 
 		/** 第一周的周日的时间戳，用来计算当前周 */
-		const val DISPLAY_FIRST_WEEK_SUNDAY = "display_first_sunday"
+		const val DISPLAY_FIRST_WEEK_MONDAY = "display_first_monday"
 	}
 }

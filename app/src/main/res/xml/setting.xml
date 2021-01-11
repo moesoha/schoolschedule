@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:persistent="false"
+	>
 	<PreferenceCategory
 		app:key="@string/key_setting_category_display"
 		app:title="@string/display_setting"
@@ -8,6 +12,7 @@
 		<EditTextPreference
 			app:key="@string/key_setting_current_week"
 			app:title="@string/current_week"
+			app:persistent="false"
 			android:inputType="number"
 			/>
 	</PreferenceCategory>

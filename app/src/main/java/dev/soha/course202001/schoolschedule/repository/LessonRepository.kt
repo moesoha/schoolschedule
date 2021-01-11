@@ -8,12 +8,9 @@ import dev.soha.course202001.schoolschedule.Application
 import dev.soha.course202001.schoolschedule.VolleyRequestQueue
 import dev.soha.course202001.schoolschedule.data.AppDatabase
 import dev.soha.course202001.schoolschedule.data.LessonDao
-import dev.soha.course202001.schoolschedule.data.SettingDao
 import dev.soha.course202001.schoolschedule.model.response.GeneralResponse
 import dev.soha.course202001.schoolschedule.model.response.Lesson
 import dev.soha.course202001.schoolschedule.model.response.Schedule
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import java.time.DayOfWeek
@@ -24,12 +21,11 @@ class LessonRepository(context: Context) {
 		val TAG = LessonRepository::class.qualifiedName
 	}
 
-	val settingDao: SettingDao = AppDatabase.getDatabase(context).settingDao()
 	val lessonDao: LessonDao = AppDatabase.getDatabase(context).lessonDao()
 	val volley: VolleyRequestQueue = VolleyRequestQueue.getInstance(context)
 
 	fun getAllLessons() = lessonDao.getAllLessons()
-	fun getLessonsByDay(dow: DayOfWeek) = lessonDao.getLessonsByDay(dow)
+	fun getLessonsByDayAndWeek(dow: DayOfWeek, week: Int) = lessonDao.getLessonsByDayAndWeek(dow, week)
 
 	fun find(id: Long) = lessonDao.find(id)
 
