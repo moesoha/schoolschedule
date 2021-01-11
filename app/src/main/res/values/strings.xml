@@ -3,19 +3,31 @@
 	<string name="title_today">今日</string>
 	<string name="title_schedule">总览</string>
 	<string name="title_setting">设置</string>
+	<string name="title_activity_oa_login">教务系统登录</string>
 
 	<string name="lesson_name">课程名称</string>
 	<string name="lesson_place">上课地点</string>
 	<string name="lesson_time">上课时间</string>
 
+	<string name="username">用户名</string>
+	<string name="password">密码</string>
+	<string name="captcha">验证码</string>
+	<string name="login">登录</string>
+	<string name="relogin">重新登录</string>
+	<string name="refresh_captcha">刷新验证码</string>
+	<string name="refreshing_captcha">正在刷新验证码</string>
+	<string name="oa_login_success">登录成功</string>
+	<string name="oa_login_fail">登录失败，请检查用户名、密码、验证码是否正确</string>
+
 	<string name="current_week">当前周次</string>
 	<string name="display_setting">显示设置</string>
 	<string name="data_sync">数据同步</string>
+
 	<string name="oa_sync">教务系统同步</string>
+	<string name="oa_sync_summary_username">已作为 %1$s 登录</string>
 	<string name="oa_sync_success">同步成功</string>
-	<string name="oa_sync_fail">和教务系统同步失败，请尝试重新登录</string>
+	<string name="oa_sync_fail">和教务系统同步失败，请重新同步或重新登录</string>
 	<string name="oa_sync_account_logged_in">您已经登录过了教务系统，请问是直接同步还是重新登录？</string>
-	<string name="relogin">重新登录</string>
 
 	<string name="key_setting_current_week">currentWeek</string>
 	<string name="key_setting_category_display">categoryDisplay</string>
