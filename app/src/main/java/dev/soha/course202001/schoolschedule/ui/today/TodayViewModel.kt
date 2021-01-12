@@ -13,6 +13,7 @@ class TodayViewModel(application: Application): AndroidViewModel(application) {
 	private val settingRepository = SettingRepository(application)
 	private val repository = LessonRepository(application)
 	val lessons = MediatorLiveData<List<Lesson>>()
+	val currentWeekNumber = liveData { emit(settingRepository.getCurrentRelativeWeekNumber()) }
 
 	init {
 		viewModelScope.launch {

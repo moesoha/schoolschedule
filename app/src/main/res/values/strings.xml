@@ -23,6 +23,8 @@
 	<string name="oa_login_success">登录成功</string>
 	<string name="oa_login_fail">登录失败，请检查用户名、密码、验证码是否正确</string>
 
+	<string name="previous_week">上一周</string>
+	<string name="next_week">下一周</string>
 	<string name="current_week">当前周次</string>
 	<string name="current_week_summary">当前是第 %1$d 周</string>
 	<string name="display_setting">显示设置</string>

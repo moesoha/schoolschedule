@@ -36,8 +36,8 @@ class LessonRepository(context: Context) {
 				Request.Method.POST,
 				Application.OA_URL_SCHEDULE_CURRENT.format(token),
 				null,
-				{ response ->
-					val response = Json.decodeFromString<GeneralResponse<Schedule>>(response.toString())
+				{ json ->
+					val response = Json.decodeFromString<GeneralResponse<Schedule>>(json.toString())
 					Log.d(TAG, "Response: %s".format(response))
 					continuation.resumeWith(Result.success(response.data.lessons))
 				},

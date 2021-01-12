@@ -44,14 +44,14 @@
 					android:text="@string/lesson_name"
 					/>
 
-				<Button
-					android:id="@+id/edit"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"
-					android:text="@string/edit"
-					style="@style/Theme.AppCompat"
-					/>
+<!--				<Button-->
+<!--					android:id="@+id/edit"-->
+<!--					android:layout_width="wrap_content"-->
+<!--					android:layout_height="wrap_content"-->
+<!--					android:layout_gravity="center_vertical"-->
+<!--					android:text="@string/edit"-->
+<!--					style="@style/Theme.AppCompat"-->
+<!--					/>-->
 			</LinearLayout>
 
 			<View

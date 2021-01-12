@@ -63,4 +63,6 @@ data class Lesson(
 				getStringArray(R.array.dow)[day.value]
 			)
 		}
+
+	fun onWeek(n: Int) = n in (week.start..week.end step weekRepetition)
 }

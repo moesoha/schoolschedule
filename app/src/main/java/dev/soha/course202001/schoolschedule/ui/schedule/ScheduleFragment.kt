@@ -1,17 +1,26 @@
 package dev.soha.course202001.schoolschedule.ui.schedule
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Typeface
+import android.graphics.text.LineBreaker
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.GridLayout
+import android.widget.Space
+import android.widget.TextView
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dev.soha.course202001.schoolschedule.R
+import dev.soha.course202001.schoolschedule.helper.DateHelper
+import dev.soha.course202001.schoolschedule.ui.MainActivity
 import dev.soha.course202001.schoolschedule.ui.lesson.LessonShowActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ScheduleFragment: Fragment() {
 	companion object {
@@ -19,37 +28,103 @@ class ScheduleFragment: Fragment() {
 	}
 
 	private lateinit var scheduleViewModel: ScheduleViewModel
+	private var _displayingWeekDiff = 0
+		set(value) {
+			field = value
+			updateScheduleLayout()
+		}
+	private val displayingWeek
+		get() = (scheduleViewModel.currentWeekNumber.value ?: 1) + _displayingWeekDiff
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View? {
 		scheduleViewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java).apply {
-			var isFirstObserved = true
-			displayingWeek.observe(viewLifecycleOwner) {
-				activity?.actionBar?.title = getString(R.string.week_n, it)
-				if (isFirstObserved) {
-					isFirstObserved = false
-					return@observe
-				}
+			currentWeekNumber.observe(viewLifecycleOwner) {
+				Log.v("$TAG,currentWeekNumber", "changed")
 				updateScheduleLayout()
 			}
 			lessons.observe(viewLifecycleOwner) {
+				Log.v("$TAG,lessons", "changed")
 				updateScheduleLayout()
 			}
 		}
 		val root = inflater.inflate(R.layout.fragment_schedule, container, false)
+		setHasOptionsMenu(true)
 		return root
 	}
 
-	fun updateScheduleLayout() {
+	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+		super.onCreateOptionsMenu(menu, inflater)
+		inflater.inflate(R.menu.schedule_menu, menu)
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		Log.v("$TAG::onOptionsItemSelected", "invoked")
+		return when (item.itemId) {
+			R.id.previous_week -> {
+				_displayingWeekDiff--
+				true
+			}
+			R.id.next_week -> {
+				_displayingWeekDiff++
+				true
+			}
+			else -> false
+		}
+	}
+
+	@SuppressLint("SimpleDateFormat", "SetTextI18n")
+	private fun updateScheduleLayout() {
 		Log.v("$TAG::updateScheduleLayout", "checking")
 		val grid: GridLayout = activity?.findViewById(R.id.grid) ?: return
 		val lessons = scheduleViewModel.lessons.value ?: return
+		(activity as MainActivity).supportActionBar?.title = getString(R.string.week_n, displayingWeek)
+		val currentWeekMonday = DateHelper.addWeekFromDate(DateHelper.getMondayOfWeekFromDate(Date()), _displayingWeekDiff)
+
+		Log.v("$TAG::updateScheduleLayout", "removing previous views")
+		grid.removeAllViews()
+		grid.addView(Space(context).apply { layoutParams = GridLayout.LayoutParams(GridLayout.spec(0), GridLayout.spec(0)) })
 
 		Log.v("$TAG::updateScheduleLayout", "started")
-		val usedSpace = Array(7) { Array(12) { false } }
+		// 显示周几
+		val dow = resources.getStringArray(R.array.dow)
+		for (i in 1..7) {
+			grid.addView(TextView(context).apply {
+				layoutParams = GridLayout.LayoutParams(
+					GridLayout.spec(0, 1),
+					GridLayout.spec(i, 1, 1f)
+				).apply {
+					width = 0
+					height = ViewGroup.LayoutParams.WRAP_CONTENT
+				}
+				textAlignment = View.TEXT_ALIGNMENT_CENTER
+				setTextAppearance(android.R.style.TextAppearance_Small)
+				val date = SimpleDateFormat("MM/dd").format(DateHelper.addDayFromDate(currentWeekMonday, i - 1))
+				text = "${dow[i]}\n$date"
+			})
+		}
+
+		// 显示节次
+		for (i in 1..12) {
+			grid.addView(TextView(context).apply {
+				layoutParams = GridLayout.LayoutParams(
+					GridLayout.spec(i, 1, 1f),
+					GridLayout.spec(0, 1)
+				).apply {
+					height = this@ScheduleFragment.resources.getDimension(R.dimen.schedule_session_height).toInt()
+					gravity = Gravity.FILL_HORIZONTAL
+				}
+				text = i.toString()
+			})
+		}
+
+		// 显示课程
 		for (lesson in lessons) {
-			val button = Button(context).apply {
+			if (!lesson.onWeek(displayingWeek)) {
+				continue
+			}
+			grid.addView(Button(context).apply {
 				layoutParams = GridLayout.LayoutParams(
 					GridLayout.spec(lesson.session.start, lesson.session.span, 1f),
 					GridLayout.spec(lesson.day.value, 1, 1f),
@@ -57,18 +132,24 @@ class ScheduleFragment: Fragment() {
 					height = 0
 					width = 0
 				}
-				text = lesson.name
+				setPadding(
+					this@ScheduleFragment.resources.getDimension(R.dimen.schedule_lesson_button_padding).toInt(),
+					this@ScheduleFragment.resources.getDimension(R.dimen.schedule_lesson_button_padding_top).toInt(),
+					this@ScheduleFragment.resources.getDimension(R.dimen.schedule_lesson_button_padding).toInt(),
+					this@ScheduleFragment.resources.getDimension(R.dimen.schedule_lesson_button_padding).toInt()
+				)
+				isAllCaps = false
+				gravity = Gravity.TOP or Gravity.CENTER
+				text = "${lesson.name}\n${lesson.place}"
+				textSize = resources.getDimension(R.dimen.schedule_lesson_button_text)
+				setTypeface(null, Typeface.NORMAL)
 				setOnClickListener {
 					startActivity(
 						Intent(activity, LessonShowActivity::class.java)
 							.putExtra(LessonShowActivity.INTENT_EXTRA_ID, lesson.id)
 					)
 				}
-			}
-			grid.addView(button)
-			for (i in lesson.session.start..lesson.session.end) {
-				usedSpace[lesson.day.value - 1][i - 1] = true
-			}
+			})
 		}
 
 		Log.v("$TAG::updateScheduleLayout", "finished")

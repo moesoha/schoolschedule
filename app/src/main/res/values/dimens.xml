@@ -1,5 +1,4 @@
 <resources>
-	<!-- Default screen margins, per the Android Design guidelines. -->
 	<dimen name="activity_horizontal_margin">16dp</dimen>
 	<dimen name="activity_vertical_margin">16dp</dimen>
 
@@ -12,4 +11,7 @@
 	<dimen name="lesson_show_card_item_inner_horizontal_margin">5dp</dimen>
 
 	<dimen name="schedule_session_height">72dp</dimen>
+	<dimen name="schedule_lesson_button_padding">5dp</dimen>
+	<dimen name="schedule_lesson_button_padding_top">16dp</dimen>
+	<dimen name="schedule_lesson_button_text">4.5sp</dimen>
 </resources>

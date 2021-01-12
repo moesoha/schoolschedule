@@ -39,6 +39,14 @@ class DateHelper {
 		}.time
 
 		/**
+		 * 对 Date 加上（或减去）天数
+		 */
+		fun addDayFromDate(d: Date, diff: Int): Date = Calendar.getInstance().apply {
+			time = d
+			add(Calendar.DATE, diff)
+		}.time
+
+		/**
 		 * 两个 Date 之间的周差
 		 */
 		fun diffWeekBetweenDates(d1: Date, d2: Date): Int {

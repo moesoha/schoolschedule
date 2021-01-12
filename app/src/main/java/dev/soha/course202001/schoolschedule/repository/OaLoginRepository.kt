@@ -66,8 +66,8 @@ class OaLoginRepository(context: Context) {
 				Request.Method.GET,
 				Application.OA_URL_LOGIN_START,
 				null,
-				{ response ->
-					val response = Json.decodeFromString<GeneralResponse<UserLoginStart>>(response.toString())
+				{ json ->
+					val response = Json.decodeFromString<GeneralResponse<UserLoginStart>>(json.toString())
 					Log.d(LessonRepository.TAG, "loginStart Response: %s".format(response))
 					continuation.resumeWith(Result.success(response.data))
 				},
@@ -77,7 +77,7 @@ class OaLoginRepository(context: Context) {
 				}
 			))
 		}
-		val (type, data) = """^data:image/(.+?),(.+)$""".toRegex().matchEntire(loginStart.captcha)!!.destructured
+		val (_type, data) = """^data:image/(.+?),(.+)$""".toRegex().matchEntire(loginStart.captcha)!!.destructured
 		val bytes = Base64.decode(data, Base64.DEFAULT)
 		val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
@@ -92,8 +92,8 @@ class OaLoginRepository(context: Context) {
 				Request.Method.POST,
 				Application.OA_URL_LOGIN_SUBMIT.format(token),
 				JSONObject(Json.encodeToString(UserLoginSubmitRequest(username, password, captcha))),
-				{ response ->
-					val response = Json.decodeFromString<GeneralResponse<UserLoginSubmitResponse>>(response.toString())
+				{ json ->
+					val response = Json.decodeFromString<GeneralResponse<UserLoginSubmitResponse>>(json.toString())
 					Log.d(LessonRepository.TAG, "loginSubmit Response: %s".format(response))
 					continuation.resumeWith(Result.success(response.data.success))
 				},

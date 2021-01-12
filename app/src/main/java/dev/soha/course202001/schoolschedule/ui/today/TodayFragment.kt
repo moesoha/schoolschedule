@@ -32,7 +32,9 @@ class TodayFragment: Fragment() {
 			adapter = lessonAdapter
 			layoutManager = LinearLayoutManager(context)
 		}
-		todayViewModel.lessons.observe(viewLifecycleOwner) { lessonAdapter.data = it }
+		todayViewModel.lessons.observe(viewLifecycleOwner) {
+			lessonAdapter.data = it.filter { todayViewModel.currentWeekNumber.value?.let { w -> it.onWeek(w) } ?: true }
+		}
 
 		return root
 	}
