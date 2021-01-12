@@ -65,7 +65,7 @@ class OaLoginActivity: AppCompatActivity() {
 
 		captchaRefresh.setOnClickListener { oaLoginViewModel.loginStart() }
 
-		password.apply {
+		captcha.apply {
 			setOnEditorActionListener { _, actionId, _ ->
 				when (actionId) {
 					EditorInfo.IME_ACTION_DONE -> oaLoginViewModel.login(username.text.toString(), password.text.toString(), captcha.text.toString())
