@@ -3,10 +3,7 @@ package dev.soha.course202001.schoolschedule.ui.schedule
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
-import android.graphics.text.LineBreaker
 import android.os.Bundle
-import android.text.Layout
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -14,7 +11,6 @@ import android.widget.GridLayout
 import android.widget.Space
 import android.widget.TextView
 import androidx.core.view.setMargins
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dev.soha.course202001.schoolschedule.R
@@ -30,13 +26,13 @@ class ScheduleFragment: Fragment() {
 	}
 
 	private lateinit var scheduleViewModel: ScheduleViewModel
-	private var _displayingWeekDiff = 0
+	private var displayingWeekDiff = 0
 		set(value) {
 			field = value
 			updateScheduleLayout()
 		}
 	private val displayingWeek
-		get() = (scheduleViewModel.currentWeekNumber.value ?: 1) + _displayingWeekDiff
+		get() = (scheduleViewModel.currentWeekNumber.value ?: 1) + displayingWeekDiff
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -65,11 +61,11 @@ class ScheduleFragment: Fragment() {
 		Log.v("$TAG::onOptionsItemSelected", "invoked")
 		return when (item.itemId) {
 			R.id.previous_week -> {
-				_displayingWeekDiff--
+				displayingWeekDiff--
 				true
 			}
 			R.id.next_week -> {
-				_displayingWeekDiff++
+				displayingWeekDiff++
 				true
 			}
 			else -> false
@@ -82,7 +78,7 @@ class ScheduleFragment: Fragment() {
 		val grid: GridLayout = activity?.findViewById(R.id.grid) ?: return
 		val lessons = scheduleViewModel.lessons.value ?: return
 		(activity as MainActivity).supportActionBar?.title = getString(R.string.week_n, displayingWeek)
-		val currentWeekMonday = DateHelper.addWeekFromDate(DateHelper.getMondayOfWeekFromDate(Date()), _displayingWeekDiff)
+		val currentWeekMonday = DateHelper.addWeekFromDate(DateHelper.getMondayOfWeekFromDate(Date()), displayingWeekDiff)
 
 		Log.v("$TAG::updateScheduleLayout", "removing previous views")
 		grid.removeAllViews()
