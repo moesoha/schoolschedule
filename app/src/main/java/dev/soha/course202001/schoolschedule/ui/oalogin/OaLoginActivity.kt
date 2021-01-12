@@ -61,7 +61,6 @@ class OaLoginActivity: AppCompatActivity() {
 				password.setText(p)
 			}
 			loginStart()
-			loadCredentials()
 		}
 
 		captchaRefresh.setOnClickListener { oaLoginViewModel.loginStart() }

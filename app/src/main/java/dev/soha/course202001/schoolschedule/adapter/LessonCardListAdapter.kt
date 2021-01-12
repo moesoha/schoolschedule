@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.soha.course202001.schoolschedule.R
 import dev.soha.course202001.schoolschedule.model.Lesson
 
-class LessonCardListAdapter internal constructor(context: Context?, private val onclick: ((Lesson) -> Unit)? = null) : RecyclerView.Adapter<LessonCardListAdapter.LessonViewHolder>() {
+class LessonCardListAdapter internal constructor(context: Context?, private val onclick: ((Lesson) -> Unit)? = null): RecyclerView.Adapter<LessonCardListAdapter.LessonViewHolder>() {
 	inner class LessonViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 		val name: TextView = itemView.findViewById(R.id.lesson_title)
 		val time: TextView = itemView.findViewById(R.id.lesson_time)
@@ -32,9 +32,9 @@ class LessonCardListAdapter internal constructor(context: Context?, private val 
 	override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
 		val current = data[position]
 		holder.name.text = current.name
-		holder.time.text = "zhuaba"
+		holder.time.text = current.sessionString
 		holder.place.text = current.place
-		holder.itemView.setOnClickListener { this.onclick?.invoke(current) }
+		this.onclick?.let { holder.itemView.setOnClickListener { it(current) } }
 	}
 
 	override fun getItemCount(): Int = data.size

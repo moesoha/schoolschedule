@@ -25,6 +25,8 @@ class SettingFragment: PreferenceFragmentCompat() {
 	private lateinit var settingViewModel: SettingViewModel
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+		setPreferencesFromResource(R.xml.setting, rootKey)
+
 		settingViewModel = ViewModelProvider(this).get(SettingViewModel::class.java).apply {
 			loading.observe(this@SettingFragment) {
 				val progressBar: ProgressBar? = activity?.findViewById(R.id.progress_bar)
@@ -49,8 +51,6 @@ class SettingFragment: PreferenceFragmentCompat() {
 				}
 			}
 		}
-
-		setPreferencesFromResource(R.xml.setting, rootKey)
 
 		findPreference<Preference>(getString(R.string.key_setting_oa_sync))?.setOnPreferenceClickListener {
 			if (settingViewModel.loggedInUsername.value == null) {

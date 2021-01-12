@@ -22,22 +22,16 @@ class OaLoginViewModel(application: Application): AndroidViewModel(application) 
 	val submitting: LiveData<Boolean> = _submitting
 	private val _loginSuccess = MutableLiveData<Boolean?>(null)
 	val loginSuccess: LiveData<Boolean?> = _loginSuccess
-	private val _loginCredentials = MutableLiveData<Pair<String?, String?>>(Pair(null, null))
-	val loginCredentials: LiveData<Pair<String?, String?>> = _loginCredentials
+
+	val loginCredentials: LiveData<Pair<String?, String?>> = liveData {
+		emit(loginRepository.getCredential())
+	}
 
 	private var token: String? = null
 
-	fun loadCredentials() = viewModelScope.launch(Dispatchers.IO) {
-		val cred = loginRepository.getCredential()
-		withContext(Dispatchers.Main) {
-			_loginCredentials.value = cred
-		}
-	}
-
 	fun loginStart() {
 		_captchaBitmap.value = null
-		var token: String? = null
-		viewModelScope.launch(Dispatchers.IO) {
+		viewModelScope.launch {
 			var captcha = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
 			try {
 				val data = loginRepository.loginStart()
@@ -47,17 +41,14 @@ class OaLoginViewModel(application: Application): AndroidViewModel(application) 
 			} catch (e: Exception) {
 				Log.e(TAG, "loginStart Exception: %s".format(e))
 			}
-			withContext(Dispatchers.Main) {
-				_captchaBitmap.value = captcha
-				this@OaLoginViewModel.token = token
-			}
+			_captchaBitmap.value = captcha
 		}
 	}
 
 	fun login(username: String, password: String, captcha: String) {
 		_submitting.value = true
 		val token = this.token
-		viewModelScope.launch(Dispatchers.IO) {
+		viewModelScope.launch {
 			var success = false
 			try {
 				success = loginRepository.loginSubmit(token!!, username, password, captcha)
@@ -65,10 +56,8 @@ class OaLoginViewModel(application: Application): AndroidViewModel(application) 
 			} catch(e: Exception) {
 				Log.e(TAG, "login Exception: %s".format(e))
 			}
-			withContext(Dispatchers.Main) {
-				_loginSuccess.value = success
-				_submitting.value = false
-			}
+			_loginSuccess.value = success
+			_submitting.value = false
 		}
 	}
 }

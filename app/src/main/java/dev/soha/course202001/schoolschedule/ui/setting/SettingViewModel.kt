@@ -25,9 +25,9 @@ class SettingViewModel(application: Application): AndroidViewModel(application) 
 	private val _currentWeekNumber = MutableLiveData<Int>(1)
 	val currentWeekNumber: LiveData<Int> = _currentWeekNumber
 
-	fun loadLoggedInUsername() = viewModelScope.launch(Dispatchers.IO) {
+	fun loadLoggedInUsername() = viewModelScope.launch {
 		val token = oaLoginRepository.getToken()
-		withContext(Dispatchers.Main) { _loggedInUsername.value = token?.second }
+		_loggedInUsername.value = token?.second
 	}
 
 	fun loadSettings() = viewModelScope.launch {
@@ -39,8 +39,8 @@ class SettingViewModel(application: Application): AndroidViewModel(application) 
 		_currentWeekNumber.value = n
 	}
 
-	fun syncWithOa() = viewModelScope.launch(Dispatchers.IO) {
-		withContext(Dispatchers.Main) { _loading.value = true }
+	fun syncWithOa() = viewModelScope.launch {
+		_loading.value = true
 		try {
 			lessonRepository.syncWithOa(oaLoginRepository.getToken()!!.first)
 			withContext(Dispatchers.Main) {
@@ -51,6 +51,6 @@ class SettingViewModel(application: Application): AndroidViewModel(application) 
 				Toast.makeText(getApplication(), R.string.oa_sync_fail, Toast.LENGTH_LONG).show()
 			}
 		}
-		withContext(Dispatchers.Main) { _loading.value = false }
+		_loading.value = false
 	}
 }
