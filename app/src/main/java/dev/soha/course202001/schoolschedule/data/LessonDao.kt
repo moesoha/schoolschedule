@@ -9,8 +9,8 @@ import java.time.DayOfWeek
 	@Query("SELECT * FROM lesson")
 	fun getAllLessons(): LiveData<List<Lesson>>
 
-	@Query("SELECT * FROM lesson WHERE day = :dayOfWeek AND week_start <= :week AND :week <= week_end")
-	fun getLessonsByDayAndWeek(dayOfWeek: DayOfWeek, week: Int): LiveData<List<Lesson>>
+	@Query("SELECT * FROM lesson WHERE day = :dayOfWeek")
+	fun getLessonsByDay(dayOfWeek: DayOfWeek): LiveData<List<Lesson>>
 
 	@Query("SELECT * FROM lesson WHERE _id = :id")
 	fun find(id: Long): LiveData<Lesson>

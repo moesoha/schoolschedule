@@ -26,7 +26,7 @@ class LessonRepository(context: Context) {
 	val volley: VolleyRequestQueue = VolleyRequestQueue.getInstance(context)
 
 	fun getAllLessons() = lessonDao.getAllLessons()
-	fun getLessonsByDayAndWeek(dow: DayOfWeek, week: Int) = lessonDao.getLessonsByDayAndWeek(dow, week)
+	fun getLessonsByDay(dow: DayOfWeek) = lessonDao.getLessonsByDay(dow)
 
 	fun find(id: Long) = lessonDao.find(id)
 

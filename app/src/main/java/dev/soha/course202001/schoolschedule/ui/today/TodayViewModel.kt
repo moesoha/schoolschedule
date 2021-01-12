@@ -12,17 +12,6 @@ import java.util.*
 class TodayViewModel(application: Application): AndroidViewModel(application) {
 	private val settingRepository = SettingRepository(application)
 	private val repository = LessonRepository(application)
-	val lessons = MediatorLiveData<List<Lesson>>()
+	val lessons: LiveData<List<Lesson>> = repository.getLessonsByDay(DateHelper.convertCalendarDowToDayOfWeek(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))
 	val currentWeekNumber = liveData { emit(settingRepository.getCurrentRelativeWeekNumber()) }
-
-	init {
-		viewModelScope.launch {
-			lessons.addSource(repository.getLessonsByDayAndWeek(
-				DateHelper.convertCalendarDowToDayOfWeek(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)),
-				settingRepository.getCurrentRelativeWeekNumber()
-			)) {
-				lessons.postValue(it)
-			}
-		}
-	}
 }
