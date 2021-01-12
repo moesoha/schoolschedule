@@ -3,9 +3,11 @@ package dev.soha.course202001.schoolschedule.ui.setting
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.EditTextPreference
@@ -40,15 +42,12 @@ class SettingFragment: PreferenceFragmentCompat() {
 				}
 			}
 			loggedInUsername.observe(this@SettingFragment) {
-				findPreference<Preference>(getString(R.string.key_setting_oa_sync))?.apply {
-					summary = it?.let { getString(R.string.oa_sync_summary_username, it) }
-				}
+				findPreference<Preference>(getString(R.string.key_setting_oa_sync))?.summary =
+					it?.let { getString(R.string.oa_sync_summary_username, it) }
 			}
 			currentWeekNumber.observe(this@SettingFragment) {
-				findPreference<Preference>(getString(R.string.key_setting_current_week))?.apply {
-					summary = it?.let { getString(R.string.current_week_summary, it) }
-					setDefaultValue(it)
-				}
+				findPreference<Preference>(getString(R.string.key_setting_current_week))?.summary =
+					it?.let { getString(R.string.current_week_summary, it) }
 			}
 		}
 
@@ -69,10 +68,16 @@ class SettingFragment: PreferenceFragmentCompat() {
 			}
 			true
 		}
-		findPreference<EditTextPreference>(getString(R.string.key_setting_current_week))?.setOnPreferenceChangeListener { _, newValue ->
-			val currentWeek = (newValue as String).toInt()
-			settingViewModel.setCurrentWeekNumber(currentWeek)
-			true
+		findPreference<EditTextPreference>(getString(R.string.key_setting_current_week))?.apply {
+			setOnBindEditTextListener {
+				it.inputType = InputType.TYPE_CLASS_NUMBER
+				settingViewModel.currentWeekNumber.value?.let { v -> it.setText(v.toString()) }
+			}
+			setOnPreferenceChangeListener { _, newValue ->
+				val currentWeek = (newValue as String).toInt()
+				settingViewModel.setCurrentWeekNumber(currentWeek)
+				true
+			}
 		}
 	}
 
