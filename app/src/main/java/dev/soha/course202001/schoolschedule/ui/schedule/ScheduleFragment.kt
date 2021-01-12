@@ -2,6 +2,7 @@ package dev.soha.course202001.schoolschedule.ui.schedule
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.text.LineBreaker
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.Space
 import android.widget.TextView
+import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -131,6 +133,7 @@ class ScheduleFragment: Fragment() {
 				).apply {
 					height = 0
 					width = 0
+					setMargins(this@ScheduleFragment.resources.getDimension(R.dimen.schedule_lesson_button_margin).toInt())
 				}
 				setPadding(
 					this@ScheduleFragment.resources.getDimension(R.dimen.schedule_lesson_button_padding).toInt(),
@@ -142,7 +145,9 @@ class ScheduleFragment: Fragment() {
 				gravity = Gravity.TOP or Gravity.CENTER
 				text = "${lesson.name}\n${lesson.place}"
 				textSize = resources.getDimension(R.dimen.schedule_lesson_button_text)
-				setTypeface(null, Typeface.NORMAL)
+
+				setTextColor(Color.WHITE)
+				setBackgroundColor(lesson.color ?: Color.BLACK)
 				setOnClickListener {
 					startActivity(
 						Intent(activity, LessonShowActivity::class.java)

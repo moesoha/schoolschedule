@@ -5,6 +5,7 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import dev.soha.course202001.schoolschedule.Application
+import dev.soha.course202001.schoolschedule.R
 import dev.soha.course202001.schoolschedule.VolleyRequestQueue
 import dev.soha.course202001.schoolschedule.data.AppDatabase
 import dev.soha.course202001.schoolschedule.data.LessonDao
@@ -47,9 +48,23 @@ class LessonRepository(context: Context) {
 				}
 			))
 		}
+		val colors = Application.res.getIntArray(R.array.lesson_candidate_color)
+		val lessonMap = HashMap<String, Int>()
+		val usedColorMap = HashSet<Int>()
 		lessonDao.removeAllImportedLessons()
 		lessons.forEach {
-			lessonDao.insert(it.toLesson())
+			val lesson = it.toLesson()
+
+			if (usedColorMap.size == colors.size) {
+				usedColorMap.clear()
+			}
+			val colorKey = "${lesson.name}|${lesson.teacher}"
+			val color = lessonMap.get(colorKey) ?: colors.first { !usedColorMap.contains(it) }
+			lessonMap[colorKey] = color
+			usedColorMap.add(color)
+			lesson.color = color
+
+			lessonDao.insert(lesson)
 		}
 	}
 }

@@ -11,9 +11,10 @@
 	android:layout_marginVertical="@dimen/listitemview_margin"
 	>
 	<androidx.cardview.widget.CardView
+		android:id="@+id/card"
 		android:layout_width="match_parent"
 		android:layout_height="160dp"
-		app:cardBackgroundColor="@color/purple_500"
+		app:cardBackgroundColor="@color/black"
 		app:cardCornerRadius="12dp"
 		>
 		<androidx.constraintlayout.widget.ConstraintLayout

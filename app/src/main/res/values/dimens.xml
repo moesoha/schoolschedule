@@ -11,7 +11,9 @@
 	<dimen name="lesson_show_card_item_inner_horizontal_margin">5dp</dimen>
 
 	<dimen name="schedule_session_height">72dp</dimen>
-	<dimen name="schedule_lesson_button_padding">5dp</dimen>
-	<dimen name="schedule_lesson_button_padding_top">16dp</dimen>
+	<dimen name="schedule_lesson_button_margin">3dp</dimen>
+	<dimen name="schedule_lesson_button_radius">8dp</dimen>
+	<dimen name="schedule_lesson_button_padding">2dp</dimen>
+	<dimen name="schedule_lesson_button_padding_top">12dp</dimen>
 	<dimen name="schedule_lesson_button_text">4.5sp</dimen>
 </resources>

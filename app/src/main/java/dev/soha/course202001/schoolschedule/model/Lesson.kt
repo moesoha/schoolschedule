@@ -1,6 +1,7 @@
 package dev.soha.course202001.schoolschedule.model
 
 import android.content.res.Resources
+import android.graphics.Color
 import androidx.room.*
 import dev.soha.course202001.schoolschedule.Application
 import dev.soha.course202001.schoolschedule.R
@@ -40,6 +41,9 @@ data class Lesson(
 	/** 周循环 */
 	@ColumnInfo(name="week_repetition")
 	var weekRepetition: Int,
+
+	@ColumnInfo(name="color")
+	var color: Int? = null
 ) {
 	private fun getString(resId: Int, vararg args: Any) = Application.res.getString(resId, *args)
 	private fun getStringArray(resId: Int) = Application.res.getStringArray(resId)
