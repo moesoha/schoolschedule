@@ -31,10 +31,10 @@
     kotlinx.serialization.KSerializer serializer(...);
 }
 
--keep,includedescriptorclasses class dev.soha.course202001.schoolschedule.**$$serializer { *; }
--keepclassmembers class dev.soha.course202001.schoolschedule.** {
+-keep,includedescriptorclasses class dev.soha.course202002.schedule.android.**$$serializer { *; }
+-keepclassmembers class dev.soha.course202002.schedule.android.** {
     *** Companion;
 }
--keepclasseswithmembers class dev.soha.course202001.schoolschedule.** {
+-keepclasseswithmembers class dev.soha.course202002.schedule.android.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
