@@ -2,7 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="SchoolSchedule.android" target="11" />
+      <module name="web" target="16" />
+      <module name="web.main" target="16" />
+      <module name="web.test" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>
