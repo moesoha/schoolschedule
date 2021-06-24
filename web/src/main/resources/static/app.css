@@ -1,0 +1,50 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	font-family: Georgia, -apple-system, 'Nimbus Roman No9 L', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'ST Heiti', serif;
+}
+body > .container {
+	max-width: 1200px;
+	box-sizing: border-box;
+	margin: 1.2rem auto;
+	padding: 0 32px;
+}
+a {
+	color: #148fd7;
+	text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+.login-frame {
+	width: 380px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.field-row {
+	margin: 3px 0;
+}
+.field-row > * {
+	vertical-align: middle;
+}
+
+input {
+	font-size: .75em;
+}
+
+.alert-box {
+	width: 100%;
+	box-sizing: border-box;
+	border: 2px solid black;
+}
+.alert-box.error {
+	border-color: red;
+}
+.alert-box > .title {
+	font-weight: bold;
+	font-size: 1.125em;
+}
+.alert-box.error > .title {
+	color: red;
+}

@@ -78,7 +78,6 @@ class OaFetcher {
 					.with("txtUserName", username)
 					.with("TextBox2", password)
 					.with("txtSecretCode", captcha)
-
 			)
 			.awaitExchange { it.rawStatusCode() == 302 }
 	}

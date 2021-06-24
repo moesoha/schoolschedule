@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout.html}">
+    <head>
+        <title>登录</title>
+    </head>
+    <body>
+        <section layout:fragment="content">
+            <div class="login-frame">
+                <div th:if="${failed}" class="alert-box error">
+                    <div class="title">登录失败！</div>
+                    请检查您的用户名、密码或者验证码是否输入正确。
+                </div>
+                <form th:object="${form}" method="post">
+                    <div class="field-row">
+                        用户名&nbsp;<input type="text" required th:field="*{username}" />
+                    </div>
+                    <div class="field-row">
+                        密码&nbsp;<input type="password" required th:field="*{password}" />
+                    </div>
+                    <div class="field-row">
+                        验证码&nbsp;
+                        <input type="text" required th:field="*{captcha}" style="width: 6em;" />
+                        <img
+                            th:src="@{/web/auth/captcha}"
+                            th:data-src="@{/web/auth/captcha}"
+                            onclick="this.src = this.getAttribute('data-src') + '?' + (Date.now() + Math.random())"
+                        />
+                    </div>
+                <input type="submit" value="登录" /><br />
+            </div>
+        </section>
+    </body>
+</html>

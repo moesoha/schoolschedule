@@ -26,8 +26,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("org.springframework.session:spring-session-data-redis")
-	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0")
 
+	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0")
+	implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.3")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.eclipse.jetty:jetty-reactive-httpclient")
 	implementation("org.jsoup:jsoup:1.13.1")
