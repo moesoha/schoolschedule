@@ -8,13 +8,12 @@ import dev.soha.course202002.schedule.web.OaFetcher
 import dev.soha.course202002.schedule.web.service.TokenStorageService
 import org.springframework.web.bind.annotation.*
 
-@RestController
 @RequestMapping("/user")
-class UserController(private val tokenStore: TokenStorageService) {
+@RestController class UserController(private val tokenStore: TokenStorageService) {
 	@GetMapping("/oa/start")
 	suspend fun oaStartAction(): Response<UserLoginStart> {
 		val request = OaFetcher()
-		val captcha = request.getCaptcha()
+		val captcha = request.getCaptchaDataUri()
 		return Response.new(UserLoginStart(tokenStore.newSession(request.cookieSessionId!!), captcha))
 	}
 

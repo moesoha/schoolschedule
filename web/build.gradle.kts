@@ -20,15 +20,20 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:${versionCoroutine}")
 	implementation(project(":model"))
 
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.springframework.session:spring-session-data-redis")
 	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0")
+
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.eclipse.jetty:jetty-reactive-httpclient")
 	implementation("org.jsoup:jsoup:1.13.1")
 	runtimeOnly("mysql:mysql-connector-java")
-	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

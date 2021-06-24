@@ -6,9 +6,8 @@ import dev.soha.course202002.schedule.web.OaFetcher
 import dev.soha.course202002.schedule.web.service.TokenStorageService
 import org.springframework.web.bind.annotation.*
 
-@RestController
 @RequestMapping("/schedule")
-class ScheduleController(private val tokenStore: TokenStorageService) {
+@RestController class ScheduleController(private val tokenStore: TokenStorageService) {
 	@GetMapping("/oa/get/{token}/current")
 	suspend fun oaGetCurrentAction(@PathVariable token: String): Response<Schedule> {
 		val session = tokenStore.getSession(token)

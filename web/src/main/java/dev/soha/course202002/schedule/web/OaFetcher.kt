@@ -3,6 +3,8 @@ package dev.soha.course202002.schedule.web
 import dev.soha.course202002.schedule.model.data.Lesson
 import dev.soha.course202002.schedule.model.data.LessonWeek
 import dev.soha.course202002.schedule.model.data.Schedule
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.eclipse.jetty.client.HttpClient
 import org.jsoup.Jsoup
 import org.springframework.core.io.ByteArrayResource
@@ -49,16 +51,17 @@ class OaFetcher {
 			}
 		}
 
-	suspend fun getCaptcha() = webClient
+	suspend fun getCaptcha() = withContext(Dispatchers.IO) { webClient
 		.get()
 		.uri("CheckCode.aspx")
 		.awaitExchange { Pair(
 			it.headers().contentType().orElse(MediaType.APPLICATION_OCTET_STREAM),
-			Base64.getEncoder().encodeToString(it.awaitBody<ByteArrayResource>().byteArray)
+			it.awaitBody<ByteArrayResource>().byteArray
 		) }
-		.let { (type, data) -> "data:$type;base64,$data" }
+	}
+	suspend fun getCaptchaDataUri() = getCaptcha().let { (type, data) -> "data:$type;base64,${Base64.getEncoder().encodeToString(data)}" }
 
-	suspend fun login(username: String, password: String, captcha: String): Boolean {
+	suspend fun login(username: String, password: String, captcha: String): Boolean = withContext(Dispatchers.IO) {
 		val formHtml = webClient
 			.get()
 			.uri("default2.aspx")
@@ -66,25 +69,27 @@ class OaFetcher {
 			.awaitBody<String>()
 		val form = Jsoup.parse(formHtml).select("form#form1")
 		val viewstate = form.select("input[name='__VIEWSTATE']").`val`()
-		return webClient
+		return@withContext webClient
 			.post()
 			.uri("default2.aspx")
 			.body(
-				fromFormData("__VIEWSTATE", viewstate)
+				fromFormData("Button1", "")
+					.with("__VIEWSTATE", viewstate)
 					.with("txtUserName", username)
 					.with("TextBox2", password)
 					.with("txtSecretCode", captcha)
-					.with("Button1", "")
+
 			)
 			.awaitExchange { it.rawStatusCode() == 302 }
 	}
 
 	suspend fun fetchSchedule(username: String): Schedule {
-		val html = webClient
+		val html = withContext(Dispatchers.IO) { webClient
 			.get()
 			.uri("xskbcx.aspx?xh={xh}&gnmkdm=N121603", username)
 			.retrieve()
 			.awaitBody<String>()
+		}
 		val dom = Jsoup.parse(html)
 		val year = dom.selectFirst("#xnd option[selected]").attr("value")
 		val semester = dom.selectFirst("#xqd option[selected]").attr("value")
