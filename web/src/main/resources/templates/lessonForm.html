@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout.html}">
+    <head>
+        <title>课程</title>
+    </head>
+    <body>
+        <section layout:fragment="content">
+            <h3 style="text-align: center;">
+                <span th:if="${newObject}">添加课程</span>
+                <span th:unless="${newObject}">编辑课程</span>
+                <small><a th:href="@{/web}">(返回)</a></small>
+            </h3>
+            <div class="login-frame" style="width: 450px;">
+                <form th:object="${form}" method="post">
+                    <div class="field-row">
+                        课程名称&nbsp;<input type="text" required th:field="*{name}" />
+                    </div>
+                    <div class="field-row">
+                        授课老师&nbsp;<input type="text" required th:field="*{teacher}" />
+                    </div>
+                    <div class="field-row">
+                        上课地点&nbsp;<input type="text" required th:field="*{place}" />
+                    </div>
+                    <div class="field-row">
+                        节次 <input type="checkbox" name="roles"
+                           th:each="s : ${ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12} }"
+                           th:text="${s}"
+                           th:value="${s}"
+                           th:field="*{sessionList}"
+                        />
+                    </div>
+                    <div class="field-row">
+                        <select th:field="*{day}">
+                            <option th:value="0" th:text="周日" />
+                            <option th:value="1" th:text="周一" />
+                            <option th:value="2" th:text="周二" />
+                            <option th:value="3" th:text="周三" />
+                            <option th:value="4" th:text="周四" />
+                            <option th:value="5" th:text="周五" />
+                            <option th:value="6" th:text="周六" />
+                        </select>
+                    </div>
+                    <div class="field-row">
+                        <input type="text" required th:field="*{weekStart}" />周
+                        至
+                        <input type="text" required th:field="*{weekEnd}" />周
+                    </div>
+                    <div class="field-row">
+                        <input type="radio" th:value="0" th:field="*{weekType}"> 每周
+                        <input type="radio" th:value="1" th:field="*{weekType}"> 单周
+                        <input type="radio" th:value="2" th:field="*{weekType}"> 双周
+                    </div>
+                <input type="submit" value="保存" /><br />
+            </div>
+        </section>
+    </body>
+</html>

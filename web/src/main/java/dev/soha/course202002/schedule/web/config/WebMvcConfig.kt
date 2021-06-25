@@ -7,9 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration class WebMvcConfig : WebMvcConfigurer {
-	@Bean fun getWebSessionInterceptor(): WebSessionInterceptor? {
-		return WebSessionInterceptor()
-	}
+	@Bean fun getWebSessionInterceptor(): WebSessionInterceptor? = WebSessionInterceptor()
 
 	override fun addInterceptors(registry: InterceptorRegistry) {
 		super.addInterceptors(registry)
