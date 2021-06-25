@@ -48,3 +48,8 @@ input {
 .alert-box.error > .title {
 	color: red;
 }
+
+table {
+	margin: 0 auto;
+	border-collapse: collapse;
+}

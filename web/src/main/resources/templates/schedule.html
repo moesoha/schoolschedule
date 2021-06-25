@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout.html}">
+    <head>
+        <title>课表</title>
+    </head>
+    <body>
+        <section layout:fragment="content">
+            <div style="text-align: center;" th:inline="text">
+                <span th:text="${username}" />
+                <form th:action="@{/web/auth/logout}" method="post" style="display: inline-block;">
+                    <input type="submit" value="退出" />
+                </form>
+                <br />
+                <span th:text="${schedule?.year}" />学年
+                第<span th:text="${schedule?.semester}" />学期
+            </div>
+            <h3 style="text-align: center;">当前系统数据</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>课程名称</th>
+                        <th>教师</th>
+                        <th>地点</th>
+                        <th colspan="3">时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+<!--                    <tr th:each="lesson: ${schedule?.lessons}">-->
+<!--                        <td th:text="${lesson.name}" />-->
+<!--                        <td th:text="${lesson.teacher}" />-->
+<!--                        <td th:text="${lesson.place}" />-->
+<!--                        <td th:text="${lesson.dayOfWeek}" />-->
+<!--                        <td th:text="${lesson.session}" />-->
+<!--                        <td th:text="${lesson.week}" />-->
+<!--                    </tr>-->
+                </tbody>
+            </table>
+            <h3 style="text-align: center;">教务系统数据</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>课程名称</th>
+                        <th>教师</th>
+                        <th>地点</th>
+                        <th colspan="3">时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="lesson: ${schedule?.lessons}">
+                        <td th:text="${lesson.name}" />
+                        <td th:text="${lesson.teacher}" />
+                        <td th:text="${lesson.place}" />
+                        <td th:text="${lesson.dayOfWeek}" />
+                        <td th:text="${lesson.session}" />
+                        <td th:text="${lesson.week}" />
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </body>
+</html>
