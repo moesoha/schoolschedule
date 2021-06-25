@@ -10,4 +10,4 @@ data class Lesson(
 	val day: Int,
 	val session: List<Int>,
 	val week: LessonWeek
-)
+): java.io.Serializable

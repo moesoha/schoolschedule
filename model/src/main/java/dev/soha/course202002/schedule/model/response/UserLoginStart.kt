@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 data class UserLoginStart(
 	val token: String,
 	val captcha: String
-)
+): java.io.Serializable

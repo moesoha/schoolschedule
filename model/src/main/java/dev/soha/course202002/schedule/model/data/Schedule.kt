@@ -7,4 +7,4 @@ data class Schedule(
 	val year: String,
 	val semester: String,
 	val lessons: List<Lesson>
-)
+): java.io.Serializable
