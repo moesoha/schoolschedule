@@ -5,6 +5,8 @@ import dev.soha.course202002.schedule.web.service.SessionFetcherService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.view.RedirectView
+import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RequestMapping("/web/auth")
@@ -26,11 +28,15 @@ import javax.servlet.http.HttpServletResponse
 		if (form.username.isNotBlank() && form.password.isNotBlank() && form.captcha.isNotBlank()) {
 			if (fetcherService.login(form.username, form.password, form.captcha)) {
 				viewName = "redirect:/web"
-				modelMap.addAttribute("attribute", "redirectWithRedirectPrefix")
 				return@apply
 			}
 		}
 		addObject("failed", true)
 		addObject("form", form.apply { password = "" })
+	}
+
+	@PostMapping("/logout")
+	suspend fun logoutAction(request: HttpServletRequest) = RedirectView("/web/auth/login").also {
+		request.session.invalidate()
 	}
 }
