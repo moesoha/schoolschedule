@@ -1,7 +1,5 @@
 package dev.soha.course202002.schedule.web.controller.web
 
-import dev.soha.course202002.schedule.model.data.Lesson
-import dev.soha.course202002.schedule.model.data.LessonWeek
 import dev.soha.course202002.schedule.web.data.LessonMapper
 import dev.soha.course202002.schedule.web.service.SessionFetcherService
 import org.springframework.http.HttpStatus
@@ -15,8 +13,8 @@ import dev.soha.course202002.schedule.web.data.Lesson as LocalLesson
 
 @RequestMapping("/web")
 @Controller class WebScheduleController(
-	val fetcherService: SessionFetcherService,
-	val lessonMapper: LessonMapper
+	private val fetcherService: SessionFetcherService,
+	private val lessonMapper: LessonMapper
 ) {
 	@GetMapping("")
 	suspend fun schedulePage() = ModelAndView("schedule").apply {

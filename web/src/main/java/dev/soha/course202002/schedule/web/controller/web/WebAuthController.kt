@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RequestMapping("/web/auth")
-@Controller class WebAuthController(val fetcherService: SessionFetcherService) {
+@Controller class WebAuthController(private val fetcherService: SessionFetcherService) {
 	@GetMapping("/captcha")
 	@ResponseBody
 	suspend fun captchaAction(response: HttpServletResponse) {
