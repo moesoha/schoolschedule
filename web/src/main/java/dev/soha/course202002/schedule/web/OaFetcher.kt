@@ -111,7 +111,7 @@ class OaFetcher {
 						LessonWeek(
 							weekStart.toInt(),
 							weekEnd.toInt(),
-							(if (weekType.isBlank()) 0 else if (weekType == "双周") 2 else 1)
+							(if (weekType.isBlank()) 0 else if (weekType == "|双周") 2 else 1)
 						)
 					)
 				}
