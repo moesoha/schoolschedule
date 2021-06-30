@@ -1,6 +1,7 @@
 package dev.soha.course202002.schedule.web.controller.web
 
 import dev.soha.course202002.schedule.model.request.UserLoginSubmit
+import dev.soha.course202002.schedule.web.annotation.AllowAnonymous
 import dev.soha.course202002.schedule.web.service.SessionFetcherService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RequestMapping("/web/auth")
+@AllowAnonymous
 @Controller class WebAuthController(private val fetcherService: SessionFetcherService) {
 	@GetMapping("/captcha")
 	@ResponseBody
@@ -37,6 +39,6 @@ import javax.servlet.http.HttpServletResponse
 
 	@PostMapping("/logout")
 	suspend fun logoutAction(request: HttpServletRequest) = RedirectView("/web/auth/login").also {
-		request.session.invalidate()
+		request.getSession(false)?.invalidate()
 	}
 }

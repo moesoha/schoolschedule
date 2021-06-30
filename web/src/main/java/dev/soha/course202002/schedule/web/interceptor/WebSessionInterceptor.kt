@@ -1,5 +1,6 @@
 package dev.soha.course202002.schedule.web.interceptor
 
+import dev.soha.course202002.schedule.web.annotation.AllowAnonymous
 import dev.soha.course202002.schedule.web.service.SessionFetcherService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
@@ -17,6 +18,22 @@ class WebSessionInterceptor : HandlerInterceptor {
 			return handler.beanType.`package`.name === "dev.soha.course202002.schedule.web.controller.web"
 		}
 		return false
+	}
+
+	override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
+		if (isWebController(handler)) {
+			val handler = handler as HandlerMethod
+			if (!applicationContext.getBean(SessionFetcherService::class.java).loggedIn) {
+				if (
+					!handler.hasMethodAnnotation(AllowAnonymous::class.java) &&
+					!handler.beanType.isAnnotationPresent(AllowAnonymous::class.java)
+				) {
+					response.sendRedirect("/web/auth/login")
+					return false
+				}
+			}
+		}
+		return super.preHandle(request, response, handler)
 	}
 
 	override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {

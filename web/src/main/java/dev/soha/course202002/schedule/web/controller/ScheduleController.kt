@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 	private val lessonMapper: LessonMapper
 ) {
 	@OptIn(ExperimentalStdlibApi::class)
-	@GetMapping("/oa/get/{token}/current")
+	@RequestMapping("/oa/get/{token}/current")
 	suspend fun oaGetCurrentAction(@PathVariable token: String): Response<Schedule> {
 		val session = tokenStore.getSession(token)
 		val username = tokenStore.getUsername(token)

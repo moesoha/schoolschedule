@@ -106,7 +106,7 @@ class OaFetcher {
 						name,
 						teacher,
 						place,
-						WEEKDAYS.indexOf(weekDay.trim()),
+						WEEKDAYS.indexOf(weekDay),
 						sessions.split(',').map { it.toInt() },
 						LessonWeek(
 							weekStart.toInt(),

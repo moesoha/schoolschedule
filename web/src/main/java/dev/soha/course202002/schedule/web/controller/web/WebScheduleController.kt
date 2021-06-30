@@ -18,9 +18,10 @@ import dev.soha.course202002.schedule.web.data.Lesson as LocalLesson
 ) {
 	@GetMapping("")
 	suspend fun schedulePage() = ModelAndView("schedule").apply {
-		addObject("username", fetcherService.username)
+		val username = fetcherService.username!!;
+		addObject("username", username)
 		addObject("schedule", fetcherService.fetchSchedule())
-		val lessons = lessonMapper.findByUsername(fetcherService.username!!)
+		val lessons = lessonMapper.findByUsername(username)
 			.map { Pair(it.id, it.toDataObject()) }.toMap()
 		addObject("localSchedule", lessons)
 	}
