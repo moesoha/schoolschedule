@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse
 			}
 		}
 		addObject("failed", true)
-		addObject("form", form.apply { password = "" })
+		addObject("form", UserLoginSubmit(form.username, "", ""))
 	}
 
 	@PostMapping("/logout")
