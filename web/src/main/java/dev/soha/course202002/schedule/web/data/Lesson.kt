@@ -16,8 +16,12 @@ data class Lesson(
 	var weekType: Int
 ) {
 	var sessionList: List<Int>
-		get() = session.orEmpty().split(",").map { it.toInt() }
-		set(value) { session = value.joinToString(",") }
+		get() = session
+			?.split(",")
+			?.filterNot { it.isEmpty() }
+			?.map { it.toInt() }
+			?:listOf()
+		set(value) { session = value.joinToString(",").ifEmpty { null } }
 
 	fun toDataObject() = DataLesson(
 		name,

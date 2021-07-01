@@ -35,6 +35,13 @@ class TodayFragment: Fragment() {
 		todayViewModel.lessons.observe(viewLifecycleOwner) {
 			lessonAdapter.data = it.filter { todayViewModel.currentWeekNumber.value?.let { w -> it.onWeek(w) } ?: true }
 		}
+		// TODO: temp fix, there is a better way
+		todayViewModel.currentWeekNumber.observe(viewLifecycleOwner) {
+			val value = todayViewModel.lessons.value
+			if (value != null) {
+				lessonAdapter.data = value.filter { l -> it.let { l.onWeek(it) } }
+			}
+		}
 
 		return root
 	}
